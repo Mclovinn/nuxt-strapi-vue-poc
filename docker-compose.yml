@@ -1,0 +1,30 @@
+version: "3"
+services:
+  web:
+    build: 
+      context: ./client
+      dockerfile: ./Dockerfile
+    # command:  bash -c "make start_backend && make start front_end"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - strapi
+
+  strapi:
+    build: 
+      context: ./server
+      dockerfile: ./Dockerfile
+    # command:  bash -c "make start_backend && make start front_end"
+    ports:
+      - "1337:1337"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: example
